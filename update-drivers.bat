@@ -17,16 +17,47 @@ if /i "%manufacturer%"=="HP" set HP=1
 if /i "%manufacturer%"=="Hewlett-Packard" set HP=1
 
 if /i "%manufacturer%"=="Dell Inc." (
-    echo This is a Dell system.
-    winget install --id Dell.CommandUpdate --silent --accept-package-agreements --accept-source-agreements
+    echo This is a Dell system. Installing Dell Commandupdate...
+    winget install --id Dell.CommandUpdate --accept-package-agreements --accept-source-agreements
     "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe" /scan
     "C:\Program Files (x86)\Dell\CommandUpdate\dcu-cli.exe" /applyupdates
+    
+    REM Now dellsupportassist 
+    call "%~dp0check_winget.bat" 
+    
+    mkdir %TEMP%\DellSupport\
+    cd %TEMP%\DellSupport
+    wget2 -q https://downloads.dell.com/serviceability/catalog/SupportAssistinstaller.exe
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "%TEMP%\DellSupport\SupportAssistinstaller.exe"
+    
+    if defined INS_WGET (
+        winget remove --id GNU.Wget2 --silent --accept-package-agreements --accept-source-agreements
+    )
 ) else if defined HP (
-    echo This is a HP system.
+    echo This is a HP system. Installing HP ImageAssistant...
     winget install --id HP.ImageAssistant --silent --accept-package-agreements --accept-source-agreements
     "C:\SWSetup\HPImageAssistant\HPImageAssistant.exe" /Action:Install /AutoCleanup /Category:BIOS,Drivers,Firmware /Silent
+   
+    call "%~dp0check_winget.bat"
+    
+    REM Now HP Support Assist
+    
+    where wget2 >nul 2>&1 || (
+        set "INS_WGET=1" 
+        winget install --id GNU.Wget2 --silent --accept-package-agreements --accept-source-agreements
+    ) 
+
+    mkdir %TEMP%\HpSupport\
+    cd %TEMP%\HpSupport
+    wget2 -q https://ftp.hp.com/pub/softpaq/sp160001-160500/sp160330.exe
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "%TEMP%\HpSupport\sp160330.exe"
+
+    if defined INS_WGET (
+        winget remove --id GNU.Wget2 --silent --accept-package-agreements --accept-source-agreements
+    )
+
 ) else if /i "%manufacturer%"=="LENOVO" (
-    echo This is a Lenovo system.
+    echo This is a Lenovo system. Installing Lenovo SystemUpdate...
     winget install --id Lenovo.SystemUpdate --silent --accept-package-agreements --accept-source-agreements
     "C:\Program Files (x86)\Lenovo\System Update\tvsu.exe" /CM -search A -action INSTALL -noicon -rebootprompt -nolicense
 ) else if /i "%manufacturer%"=="ASUSTeK COMPUTER INC." (
@@ -39,6 +70,7 @@ if /i "%manufacturer%"=="Dell Inc." (
     echo Unknown system.
 )
 
+echo Driverupdates ready
 pause
 exit /b
 
