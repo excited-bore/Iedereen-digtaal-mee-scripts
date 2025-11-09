@@ -22,7 +22,7 @@ Allerei soorten scripts voor PC-Dokter Iedereen Digitaal Mee Leuven
 9) Opent notepad voor keyboard uit te testen
 10) Zet taskview (taakweergave) en widgets uit
 11) Veranderd de zoekbar naar zoekicoon
-# 12) OneDrive dropdown moet nog geimplementeerd worden
+! 12) OneDrive dropdown moet nog geimplementeerd worden
 13) Maakt copilot van taskbar los
 14) Zet windows spotlight voor vergendelscherm uit
 15) Zet 'Leuke tips, weetjes en trucs' uit
