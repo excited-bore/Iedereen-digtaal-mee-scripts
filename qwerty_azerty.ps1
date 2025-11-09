@@ -13,102 +13,104 @@ if ($toetsenbord -eq 'a') {
     # Volgens https://www.reddit.com/r/PowerShell/comments/1ecbt2v/changing_keyboard_layout_programatically_when/
     # Een nieuwe Powershell sessie oproepen moet alleen in een ps1/powershell script/bestand
     # Niet in .bat / batch bestand!!
-    $WinPS = New-PSSession -UseWindowsPowerShell
-    Invoke-Command -ScriptBlock {
+    #$WinPS = New-PSSession -UseWindowsPowerShell
     
-        Write-Host "Belgisch punt AZERTY installatie begint nu..." 
-        
-        $targetLanguageTag = "nl-BE"; 
-        $targetLayout = "00000813"; 
-        #$languages = Get-WinUserLanguageList;
+    Write-Host "Belgisch punt AZERTY installatie begint nu..." 
+   
+    # Check dat layout niet al geinstalleerd is
+    $targetLanguageTag = "nl-BE"; 
+    $targetLayout = "00000813"; 
+    $languages = Get-WinUserLanguageList;
 
-        # Check dat Belgian (Period) al geinstalleerd is
-        $alreadyInstalled = $false
-        foreach ($lang in $languages) {
-            if ($lang.LanguageTag -eq $targetLanguageTag) {
-                if ($lang.InputMethodTips -contains "0409:$targetLayout" -or
-                    $lang.InputMethodTips -contains "0813:$targetLayout" -or
-                    $lang.InputMethodTips -contains "nl-BE:$targetLayout") {
-                    $alreadyInstalled = $true
-                }
+    # Check dat Belgian (Period) al geinstalleerd is
+    $alreadyInstalled = $false
+    foreach ($lang in $languages) {
+        if ($lang.LanguageTag -eq $targetLanguageTag) {
+            if ($lang.InputMethodTips -contains "nl-BE" -or
+                $lang.InputMethodTips -contains "0409:$targetLayout") {
+                $alreadyInstalled = $true
             }
         }
+    }
 
-        if ( $alreadyInstalled) { 
-            
-            Write-Host "AZERTY all geinstalleerd!"; 
-        
-        } elseif (! $alreadyInstalled) {
-            
-            ## Create a new language entry for Belgian (Period)
-            #$newLang = New-WinUserLanguageList -Language $targetLanguageTag
-            #$newLang[0].InputMethodTips.Add("0409:$targetLayout")
+    if ( $alreadyInstalled) { 
+       
+        $languages.RemoveAll( { $args[0].InputMethodTips -notlike "0409:$targetLayout" } )
+        Set-WinUserLanguageList $languages -Force
 
-            #$languages.Add($newLang[0])
-            #Set-WinUserLanguageList $languages -Force
-
-            $newLangList = New-WinUserLanguageList -Language $targetLanguageTag
-        
-            $newLangList[0].InputMethodTips.Clear()
-            $newLangList[0].InputMethodTips.Add("0409:$targetLayout")
-
-            Set-WinUserLanguageList $newLangList -Force
-
-            Set-WinDefaultInputMethodOverride -InputTip "0409:$targetLayout"
-            
-            Write-Host "Belgian (Period) AZERTY geïnstalleerd!"
-        }
+        Write-Host "AZERTY al geinstalleerd!"; 
     
-    } -Session $WinPS
+    } elseif (! $alreadyInstalled) {
+        
+        ## Create a new language entry for Belgian (Period)
+        #$newLang = New-WinUserLanguageList -Language $targetLanguageTag
+        #$newLang[0].InputMethodTips.Add("0409:$targetLayout")
+
+        #$languages.Add($newLang[0])
+        #Set-WinUserLanguageList $languages -Force
+
+        $newLangList = New-WinUserLanguageList -Language $targetLanguageTag
+    
+        $newLangList[0].InputMethodTips.Clear()
+        $newLangList[0].InputMethodTips.Add("0409:$targetLayout")
+
+        Set-WinUserLanguageList $newLangList -Force
+
+        Set-WinDefaultInputMethodOverride -InputTip "0409:$targetLayout"
+        
+        Write-Host "Belgian (Period) AZERTY geinstalleerd!"
+    }
 
 }elseif($toetsenbord -eq 'q'){
 
-    $WinPS = New-PSSession -UseWindowsPowerShell
-    Invoke-Command -ScriptBlock {
+    #$WinPS = New-PSSession -UseWindowsPowerShell
 
-        Write-Host "US Internationaal QWERTY installatie begint nu..."
+    Write-Host "US Internationaal QWERTY installatie begint nu..."
 
-        $targetLanguageTag = "en-US"
-        $targetLayout = "00020409"  
-        # 0409 = US English, 020409 = US-International
+    $targetLanguageTag = "en-US"
+    $targetLayout = "00020409"  
+    $languages = Get-WinUserLanguageList
+    # 0409 = US English, 020409 = US-International
 
-        #$languages = Get-WinUserLanguageList
 
-        $alreadyInstalled = $false
-        foreach ($lang in $languages) {
-            if ($lang.LanguageTag -eq $targetLanguageTag) {
-                if ($lang.InputMethodTips -contains "0409:$targetLayout" -or
-                    $lang.InputMethodTips -contains "en-US:$targetLayout") {
-                    $alreadyInstalled = $true
-                }
+    $alreadyInstalled = $false
+    foreach ($lang in $languages) {
+        if ($lang.LanguageTag -eq $targetLanguageTag) {
+            if ($lang.InputMethodTips -contains "0409:$targetLayout" -or
+                $lang.InputMethodTips -contains "en-US:$targetLayout") {
+                $alreadyInstalled = $true
             }
         }
+    }
+   
+    if ( $alreadyInstalled ) {
         
-        if  ( $alreadyInstalled) {
-            
-            Write-Host "QWERTY all geinstalleerd!"
-         
-        } elseif (! $alreadyInstalled) {
+        $languages.RemoveAll( { $args[0].InputMethodTips -notlike "0409:$targetLayout" } )
+        Set-WinUserLanguageList $languages -Force
 
-            #$newLang = New-WinUserLanguageList -Language $targetLanguageTag
-            #$newLang[0].InputMethodTips.Clear()
-            #$newLang[0].InputMethodTips.Add("0409:$targetLayout")
-            #$languages.Add($newLang[0])
+        Write-Host "QWERTY al geinstalleerd!"
+     
+    } elseif (! $alreadyInstalled) {
 
-            #Set-WinUserLanguageList $languages -Force
+        #$newLang = New-WinUserLanguageList -Language $targetLanguageTag
+        #$newLang[0].InputMethodTips.Clear()
+        #$newLang[0].InputMethodTips.Add("0409:$targetLayout")
+        #$languages.Add($newLang[0])
 
-            $newLangList = New-WinUserLanguageList -Language $targetLanguageTag
+        #Set-WinUserLanguageList $languages -Force
 
-            $newLangList[0].InputMethodTips.Clear()
-            $newLangList[0].InputMethodTips.Add("0409:$targetLayout")
-            
-            Set-WinUserLanguageList $newLangList -Force
+        $newLangList = New-WinUserLanguageList -Language $targetLanguageTag
 
-            Set-WinDefaultInputMethodOverride -InputTip "0409:$targetLayout"
-            
-            Write-Host "US Internationaal QWERTY geïnstalleerd!"
-        }
+        
+        $newLangList[0].InputMethodTips.Clear()
+        $newLangList[0].InputMethodTips.Add("0409:$targetLayout")
        
-    
-    } -Session $WinPS
+
+        Set-WinUserLanguageList $newLangList -Force
+
+        Set-WinDefaultInputMethodOverride -InputTip "0409:$targetLayout"
+        
+        Write-Host "US Internationaal QWERTY geinstalleerd!"
+    }
+       
 }
