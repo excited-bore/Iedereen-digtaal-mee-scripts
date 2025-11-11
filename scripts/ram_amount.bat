@@ -1,5 +1,10 @@
 @echo OFF
 
 echo Ram: 
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$sticks = (Get-CimInstance Win32_PhysicalMemory  | Format-Table -AutoSize BankLabel | Select-Object -Skip 4).Length; $amount = [math]::Round(((Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1GB) / $sticks); Write-Host \"$sticks X $amount GB\""
+:: Display RAM stick count and size (e.g. "4 X 16GB")
 
+:: Use PowerShell to query memory information
+for /f "tokens=*" %%A in ('powershell -NoProfile -ExecutionPolicy Bypass ^
+  "(Get-CimInstance Win32_PhysicalMemory | ForEach-Object { $_.Capacity / 1GB } | Group-Object | ForEach-Object { '{0} X {1}GB' -f $_.Count, [int]$_.Name })"') do (
+  echo %%A
+)
