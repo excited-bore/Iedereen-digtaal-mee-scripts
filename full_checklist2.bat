@@ -1,69 +1,69 @@
 @echo off
 
 REM Apps installeren...
-call "%~dp0install_apps.bat"
+call "%~dp0scripts\install_apps.bat"
 
 REM Setting file explorer options...
-call "%~dp0fileExplorer.bat"
+call "%~dp0scripts\fileExplorer.bat"
 
 REM Setting keyboard...
-call "%~dp0qwerty_azerty.bat"
+call "%~dp0scripts\qwerty_azerty.bat"
 
 REM Setting diagnostic feedback frequency...
-call "%~dp0feedback_never.bat"
+call "%~dp0scripts\feedback_never.bat"
 
 REM Disabling lockscreen notifications and notification sounds...
-call "%~dp0disable_sound_or_lockscreen_notifications.bat"
+call "%~dp0scripts\disable_sound_or_lockscreen_notifications.bat"
 
 REM Checking camera...
-call "%~dp0check_camera.bat"
+call "%~dp0scripts\check_camera.bat"
 
 REM Checking microphone...
-call "%~dp0check_microphone.bat"
+call "%~dp0scripts\check_microphone.bat"
 
 REM Checking speakers...
-call "%~dp0check_sound.bat"
+call "%~dp0scripts\check_sound.bat"
 
 REM Checking keyboard...
-call "%~dp0check_keyboard.bat"
+call "%~dp0scripts\check_keyboard.bat"
 
 REM Disabling taskview and widgets...
-call "%~dp0disable_taskview_widgets.bat"
+call "%~dp0scripts\disable_taskview_widgets.bat"
 
 REM Turn searchbar into search icon...
-call "%~dp0taskbar_search_icon.bat"
+call "%~dp0scripts\taskbar_search_icon.bat"
 
 REM Remove copilot from taskbar...
-call "%~dp0disable_copilot_taskbar.bat"
+call "%~dp0scripts\disable_copilot_taskbar.bat"
 
 REM Disable windows spotlight on lockscreen...
-call "%~dp0disable_windows_spotlight.bat"
+call "%~dp0scripts\disable_windows_spotlight.bat"
 
 REM Turning off 'fun facts, tips and tricks'...
-call "%~dp0disable_facts_tips_tricks.bat"
+call "%~dp0scripts\disable_facts_tips_tricks.bat"
 
 REM Turning off suggestions for tips...
-call "%~dp0disable_tips_suggestions.bat"
+call "%~dp0scripts\disable_tips_suggestions.bat"
 
 REM Turning off accountrelated notifications...
-call "%~dp0no_account_notifications.bat"
+call "%~dp0scripts\no_account_notifications.bat"
 
 REM Putting 'This PC' shortcut on desktop...
-call "%~dp0add_mypc_desktop_icon.bat"
+call "%~dp0scripts\add_mypc_desktop_icon.bat"
 
 
 REM Drive storage
-call "%~dp0drive_space.bat"
+call "%~dp0scripts\drive_space.bat"
 
 REM Ram Amount
-call "%~dp0ram_amount.bat"
+call "%~dp0scripts\ram_amount.bat"
 
 REM Processor
-call "%~dp0processor.bat"
+call "%~dp0scripts\processor.bat"
 
 REM Windows Version
-call "%~dp0winversion.bat"
+call "%~dp0scripts\winversion.bat"
 
 REM Serial number
-call "%~dp0serialnumber.bat"
+call "%~dp0scripts\serialnumber.bat"
 
