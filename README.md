@@ -30,4 +30,4 @@ Allerei soorten scripts voor PC-Dokter Iedereen Digitaal Mee Leuven
 17) Zet accountgerelateerde meldingen uit
 18) Maakt een shortcut voor 'Mijn PC' op de desktop
 
-Brengt op het laatst ook wat de drivespace (ROM), RAM, Processor, Win versie en Serienummer teweeg
+Brengt op het laatst ook wat de drivespace (ROM), RAM, Processor, Windows versie en Serienummer teweeg
