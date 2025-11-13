@@ -1,7 +1,7 @@
 @echo off
 
 REM Apps installeren...
-call "%~dp0scripts\install_apps.bat"
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\install_apps.ps1"
 
 REM Setting file explorer options...
 call "%~dp0scripts\fileExplorer.bat"
@@ -10,7 +10,7 @@ REM Setting keyboard...
 call "%~dp0scripts\qwerty_azerty.bat"
 
 REM Setting diagnostic feedback frequency...
-call "%~dp0scripts\feedback_never.bat"
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\feedback_never.ps1"
 
 REM Disabling lockscreen notifications and notification sounds...
 call "%~dp0scripts\disable_sound_or_lockscreen_notifications.bat"
@@ -49,7 +49,7 @@ REM Turning off accountrelated notifications...
 call "%~dp0scripts\no_account_notifications.bat"
 
 REM Putting 'This PC' shortcut on desktop...
-call "%~dp0scripts\add_mypc_desktop_icon.bat"
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\add_mypc_desktop_icon.ps1
 
 
 REM Drive storage
@@ -67,3 +67,4 @@ call "%~dp0scripts\winversion.bat"
 REM Serial number
 call "%~dp0scripts\serialnumber.bat"
 
+pause
