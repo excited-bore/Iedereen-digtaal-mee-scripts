@@ -33,6 +33,9 @@ call "%~dp0scripts\disable_taskview_widgets.bat"
 REM Turn searchbar into search icon...
 call "%~dp0scripts\taskbar_search_icon.bat"
 
+REM Move onedrive to overflow menu...
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\onedrive_overflow.ps1"
+
 REM Remove copilot from taskbar...
 call "%~dp0scripts\disable_copilot_taskbar.bat"
 
